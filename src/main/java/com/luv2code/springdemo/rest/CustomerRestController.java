@@ -45,8 +45,12 @@ public class CustomerRestController {
 
     @DeleteMapping("/customers/{id}")
     public String deleteCustomer(@PathVariable int id){
+        Customer customer = customerService.getCustomer(id);
+        if(customer == null)
+            throw new CustomerNotFoundException("Customer doesn't exist - " + id);
+
         customerService.deleteCustomer(id);
-        return "Deleted customer with the id " + id;
+        return "Deleted customer id " + id;
     }
 
 }
